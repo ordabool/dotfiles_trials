@@ -9,7 +9,7 @@ Steps I did so far: (So I may automate this)
 - Set up with copilot or some other AI model (?)
 - Install `ripgrep`
 - Install `jq`
-- Install powerlevel10k - https://github.com/romkatv/powerlevel10k?tab=readme-ov-file#manual & nerd font
+- Install powerlevel10k - https://github.com/romkatv/powerlevel10k?tab=readme-ov-file#manual & nerd font (I use DejaVuSansM Nerd Font)
 - Install `tmux`
 - Install luarocks - https://github.com/luarocks/luarocks/blob/main/docs/installation_instructions_for_unix.md
 
