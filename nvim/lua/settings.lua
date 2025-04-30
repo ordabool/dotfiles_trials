@@ -18,6 +18,13 @@ vim.opt.cursorline = false
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
+-- Use 4 spaces tab
+vim.opt.shiftwidth = 4
+vim.opt.smarttab = true
+vim.opt.expandtab = true
+vim.opt.tabstop = 8
+vim.opt.softtabstop = 0
+
 -- Automatically detect and handle different line endings
 vim.opt.fileformats = { 'unix', 'dos' }
 
@@ -46,4 +53,26 @@ end, { desc = 'Remove trailing CRLF endings' })
 vim.keymap.set('n', '<leader>j', function()
   vim.cmd([[%!jq .]])
 end, { desc = 'Format JSON file' })
+
+-- Map 'jj' to escape from insert mode
+vim.keymap.set('i', 'jj', '<Esc>', { noremap = true, silent = true })
+
+-- Clear search highlighting
+vim.keymap.set('n', '<leader>/', function()
+  vim.cmd('nohlsearch')
+end, { desc = 'Clear search highlighting' })
+
+-- Add YACC filetype syntax highlighting
+vim.filetype.add({
+  pattern = { [".*%.y"] = "yacc" },
+})
+
+-- Set terminal colors
+vim.opt.termguicolors = true
+
+-- Resize splits using Ctrl + hjkl
+vim.api.nvim_set_keymap('n', '<C-h>', ':vertical resize -2<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-j>', ':resize +2<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-k>', ':resize -2<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-l>', ':vertical resize +2<CR>', { noremap = true, silent = true })
 
