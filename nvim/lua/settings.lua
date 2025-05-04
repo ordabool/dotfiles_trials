@@ -12,6 +12,10 @@ vim.opt.signcolumn = 'no'
 -- Show which line your cursor is on
 vim.opt.cursorline = false
 
+-- Disable mouse and popup menu
+vim.opt.mouse = ''
+vim.opt.mousemodel = 'extend'
+
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
