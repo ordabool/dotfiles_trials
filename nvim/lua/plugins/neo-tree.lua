@@ -1,5 +1,4 @@
 return {
---[[
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
   dependencies = {
@@ -13,6 +12,6 @@ return {
   ---@type neotree.Config?
   opts = {
     -- fill any relevant options here
+    vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', { desc = 'Toggle Neo-tree' })
   },
-]]
 }

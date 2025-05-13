@@ -4,6 +4,7 @@ return {
     provider = "copilot",
   },
   build = "make",
+  mode = "legacy",
   dependencies = {
     "nvim-tree/nvim-web-devicons",
     "stevearc/dressing.nvim",
