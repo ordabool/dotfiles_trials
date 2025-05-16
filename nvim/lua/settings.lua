@@ -20,7 +20,7 @@ vim.opt.mousemodel = 'extend'
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣', extends = '>', precedes = '<', eol = '↴' }
 
 -- Use 4 spaces tab
 vim.opt.shiftwidth = 4
@@ -31,6 +31,17 @@ vim.opt.softtabstop = 0
 
 -- Automatically detect and handle different line endings
 vim.opt.fileformats = { 'unix', 'dos' }
+
+-- Set line endings for files
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--    pattern = "*",
+--    command = "set binary | set noeol"
+-- })
+
+-- vim.api.nvim_create_autocmd("BufWritePost", {
+--     pattern = "*",
+--     command = "set nobinary | set eol"
+-- })
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
@@ -80,3 +91,7 @@ vim.api.nvim_set_keymap('n', '<C-j>', ':resize +2<CR>', { noremap = true, silent
 vim.api.nvim_set_keymap('n', '<C-k>', ':resize -2<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-l>', ':vertical resize +2<CR>', { noremap = true, silent = true })
 
+-- Treat Jenkinsfile as groovy
+vim.cmd [[
+  autocmd BufRead,BufNewFile *Jenkinsfile* set filetype=groovy
+]]
