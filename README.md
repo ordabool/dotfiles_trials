@@ -27,6 +27,10 @@ The script will install:
 - DejaVuSansM Nerd Font
 - All dotfile configurations (with backups of existing files)
 
+## Machine-Specific Configuration
+
+Create `~/.zshrc.local` for machine-specific aliases and environment variables that shouldn't be tracked in git. See `.zshrc.local.example` for template.
+
 ## What's Included
 
 - **Neovim**: Lua-based config with Lazy.nvim plugin manager

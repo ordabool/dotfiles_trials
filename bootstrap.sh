@@ -2,6 +2,13 @@
 
 set -e  # Exit on error
 
+# Determine if we need sudo
+if [ "$EUID" -eq 0 ]; then
+    SUDO=""
+else
+    SUDO="sudo"
+fi
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -59,14 +66,14 @@ install_packages() {
 
     case $OS in
         ubuntu|debian|pop)
-            sudo apt-get update
-            sudo apt-get install -y $packages
+            $SUDO apt-get update
+            $SUDO apt-get install -y $packages
             ;;
         fedora|rhel|centos)
-            sudo dnf install -y $packages
+            $SUDO dnf install -y $packages
             ;;
         arch|manjaro)
-            sudo pacman -Sy --noconfirm $packages
+            $SUDO pacman -Sy --noconfirm $packages
             ;;
         macos)
             if ! command_exists brew; then
@@ -98,15 +105,15 @@ install_nodejs() {
 
     case $OS in
         ubuntu|debian|pop)
-            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-            sudo apt-get install -y nodejs
+            curl -fsSL https://deb.nodesource.com/setup_20.x | $SUDO -E bash -
+            $SUDO apt-get install -y nodejs
             ;;
         fedora|rhel|centos)
-            curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
-            sudo dnf install -y nodejs
+            curl -fsSL https://rpm.nodesource.com/setup_20.x | $SUDO bash -
+            $SUDO dnf install -y nodejs
             ;;
         arch|manjaro)
-            sudo pacman -S --noconfirm nodejs npm
+            $SUDO pacman -S --noconfirm nodejs npm
             ;;
         macos)
             brew install node@20
@@ -131,8 +138,8 @@ install_neovim() {
         # Download latest Neovim binary
         cd /tmp
         wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-        sudo tar -xzf nvim-linux64.tar.gz -C /opt
-        sudo mv /opt/nvim-linux64 /opt/nvim-linux-x86_64
+        $SUDO tar -xzf nvim-linux64.tar.gz -C /opt
+        $SUDO mv /opt/nvim-linux64 /opt/nvim-linux-x86_64
         rm nvim-linux64.tar.gz
     fi
 
@@ -150,13 +157,13 @@ install_luarocks() {
 
     case $OS in
         ubuntu|debian|pop)
-            sudo apt-get install -y luarocks
+$SUDO apt-get install -y luarocks
             ;;
         fedora|rhel|centos)
-            sudo dnf install -y luarocks
+$SUDO dnf install -y luarocks
             ;;
         arch|manjaro)
-            sudo pacman -S --noconfirm luarocks
+$SUDO pacman -S --noconfirm luarocks
             ;;
         macos)
             brew install luarocks
@@ -179,7 +186,7 @@ install_claude_code() {
         brew install claude
     else
         # Install via npm globally
-        sudo npm install -g @anthropic-ai/claude-code
+$SUDO npm install -g @anthropic-ai/claude-code
     fi
 
     log_success "Claude Code installed"
