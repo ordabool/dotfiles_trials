@@ -62,7 +62,7 @@ command_exists() {
 install_packages() {
     log_info "Installing system packages..."
 
-    local packages="git curl wget tmux zsh fzf ripgrep jq xclip build-essential"
+    local packages="git curl wget tmux zsh fzf ripgrep jq xclip build-essential fontconfig"
 
     case $OS in
         ubuntu|debian|pop)
@@ -105,11 +105,19 @@ install_nodejs() {
 
     case $OS in
         ubuntu|debian|pop)
-            curl -fsSL https://deb.nodesource.com/setup_20.x | $SUDO -E bash -
+            if [ -z "$SUDO" ]; then
+                curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+            else
+                curl -fsSL https://deb.nodesource.com/setup_20.x | $SUDO -E bash -
+            fi
             $SUDO apt-get install -y nodejs
             ;;
         fedora|rhel|centos)
-            curl -fsSL https://rpm.nodesource.com/setup_20.x | $SUDO bash -
+            if [ -z "$SUDO" ]; then
+                curl -fsSL https://rpm.nodesource.com/setup_20.x | bash -
+            else
+                curl -fsSL https://rpm.nodesource.com/setup_20.x | $SUDO bash -
+            fi
             $SUDO dnf install -y nodejs
             ;;
         arch|manjaro)
@@ -137,10 +145,9 @@ install_neovim() {
     else
         # Download latest Neovim binary
         cd /tmp
-        wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-        $SUDO tar -xzf nvim-linux64.tar.gz -C /opt
-        $SUDO mv /opt/nvim-linux64 /opt/nvim-linux-x86_64
-        rm nvim-linux64.tar.gz
+        wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz
+        $SUDO tar -xzf nvim-linux-x86_64.tar.gz -C /opt
+        rm nvim-linux-x86_64.tar.gz
     fi
 
     log_success "Neovim installed: $(/opt/nvim-linux-x86_64/bin/nvim --version | head -n1)"
