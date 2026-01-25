@@ -95,3 +95,20 @@ vim.api.nvim_set_keymap('n', '<C-l>', ':vertical resize +2<CR>', { noremap = tru
 vim.cmd [[
   autocmd BufRead,BufNewFile *Jenkinsfile* set filetype=groovy
 ]]
+
+-- Auto-reload files when changed externally (e.g., by Claude Code)
+vim.opt.autoread = true
+
+-- Trigger checktime on various events to detect external changes
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  pattern = "*",
+  command = "checktime",
+})
+
+-- Notify when file is auto-reloaded
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+  pattern = "*",
+  callback = function()
+    vim.notify("File reloaded: " .. vim.fn.expand("%"), vim.log.levels.INFO)
+  end,
+})
