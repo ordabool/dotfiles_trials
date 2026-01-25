@@ -1,0 +1,4 @@
+# Machine-specific configuration files
+# These are sourced automatically by .zshrc if present
+# See .zshrc.local.example for a template
+.zshrc.local

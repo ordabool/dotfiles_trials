@@ -372,6 +372,7 @@ EOF
     echo "  3. Open neovim - plugins will auto-install: nvim"
     echo "  4. Set up Claude Code: claude"
     echo "  5. Make sure your terminal uses 'DejaVuSansM Nerd Font'"
+    echo "  6. (Optional) Create ~/.zshrc.local for machine-specific aliases/config"
     echo
     log_warning "If you want to use zsh immediately, run: zsh"
 }

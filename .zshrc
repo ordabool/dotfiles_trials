@@ -109,10 +109,29 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias vdi="ssh odabool@mtl-vdi-1718.wap.labs.mlnx"
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+# Tmux aliases
+alias t='tmux'
+alias ta='tmux attach'
+alias tl='tmux list-sessions'
+alias ts='tmux new-session -s'
+
+# Load Powerlevel10k theme (try multiple possible locations)
+if [[ -f ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme ]]; then
+    source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
+elif [[ -f ~/powerlevel10k/powerlevel10k.zsh-theme ]]; then
+    source ~/powerlevel10k/powerlevel10k.zsh-theme
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+# Add Neovim to PATH if installed (Linux binary install location)
+if [[ -d /opt/nvim-linux-x86_64/bin ]]; then
+    export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+fi
+
+# Source machine-specific configuration if it exists
+if [[ -f ~/.zshrc.local ]]; then
+    source ~/.zshrc.local
+fi

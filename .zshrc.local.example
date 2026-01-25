@@ -1,0 +1,14 @@
+# Machine-specific configuration template
+# Copy this file to ~/.zshrc.local and customize for your machine
+# .zshrc.local is not tracked by git and is loaded automatically if present
+
+# Example: Work-specific aliases
+# alias vpn="sudo openvpn /path/to/config.ovpn"
+# alias work-server="ssh user@work-server.com"
+
+# Example: Machine-specific environment variables
+# export WORK_PROJECT_DIR="$HOME/work/projects"
+# export COMPANY_API_KEY="your-api-key-here"
+
+# Example: Path modifications for this machine
+# export PATH="$PATH:/opt/custom-tools/bin"
