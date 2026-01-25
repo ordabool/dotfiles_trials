@@ -2,3 +2,7 @@
 # These are sourced automatically by .zshrc if present
 # See .zshrc.local.example for a template
 .zshrc.local
+
+# Tmux plugins (managed by TPM)
+# Plugins are listed in .tmux.conf and installed via TPM
+.tmux/

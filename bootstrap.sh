@@ -62,25 +62,34 @@ command_exists() {
 install_packages() {
     log_info "Installing system packages..."
 
-    local packages="git curl wget tmux zsh fzf ripgrep jq xclip build-essential fontconfig"
+    local packages="git curl wget unzip tmux zsh fzf ripgrep jq bc xclip build-essential fontconfig"
 
     case $OS in
         ubuntu|debian|pop)
             $SUDO apt-get update
             $SUDO apt-get install -y $packages
+            # Install GitHub CLI
+            if ! command_exists gh; then
+                log_info "Installing GitHub CLI..."
+                curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | $SUDO dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+                $SUDO chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+                echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | $SUDO tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+                $SUDO apt-get update
+                $SUDO apt-get install -y gh
+            fi
             ;;
         fedora|rhel|centos)
-            $SUDO dnf install -y $packages
+            $SUDO dnf install -y $packages gh
             ;;
         arch|manjaro)
-            $SUDO pacman -Sy --noconfirm $packages
+            $SUDO pacman -Sy --noconfirm $packages github-cli
             ;;
         macos)
             if ! command_exists brew; then
                 log_info "Installing Homebrew..."
                 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             fi
-            brew install $packages
+            brew install $packages gh
             ;;
         *)
             log_error "Unsupported OS for automatic package installation: $OS"
@@ -227,6 +236,26 @@ install_powerlevel10k() {
     log_success "Powerlevel10k installed"
 }
 
+# Install TPM (Tmux Plugin Manager)
+install_tpm() {
+    local TPM_DIR="$HOME/.tmux/plugins/tpm"
+
+    if [ -d "$TPM_DIR" ]; then
+        log_success "TPM already installed"
+    else
+        log_info "Installing TPM (Tmux Plugin Manager)..."
+        git clone --depth=1 https://github.com/tmux-plugins/tpm "$TPM_DIR"
+        log_success "TPM installed"
+    fi
+
+    # Install tmux plugins automatically (only if tmux is running)
+    if [ -n "$TMUX" ] && [ -f "$TPM_DIR/bin/install_plugins" ]; then
+        log_info "Installing tmux plugins..."
+        "$TPM_DIR/bin/install_plugins"
+        log_success "Tmux plugins installed"
+    fi
+}
+
 # Install Nerd Font
 install_nerd_font() {
     log_info "Checking for Nerd Fonts..."
@@ -247,13 +276,62 @@ install_nerd_font() {
         log_info "Installing DejaVuSansM Nerd Font..."
         mkdir -p "$FONT_DIR"
         cd /tmp
-        wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/DejaVuSansMono.zip
-        unzip -o DejaVuSansMono.zip -d "$FONT_DIR"
-        rm DejaVuSansMono.zip
-        fc-cache -fv
 
-        log_success "Nerd Font installed"
+        if ! wget -q https://github.com/ryanoasis/nerd-fonts/releases/latest/download/DejaVuSansMono.zip; then
+            log_error "Failed to download Nerd Font"
+            return 1
+        fi
+
+        if ! unzip -q -o DejaVuSansMono.zip -d "$FONT_DIR"; then
+            log_error "Failed to extract Nerd Font"
+            rm -f DejaVuSansMono.zip
+            return 1
+        fi
+
+        rm DejaVuSansMono.zip
+
+        if command_exists fc-cache; then
+            fc-cache -fv
+            log_success "Nerd Font installed and cache updated"
+        else
+            log_success "Nerd Font installed (fc-cache not available, restart terminal to apply)"
+        fi
+
         log_warning "Set your terminal to use 'DejaVuSansM Nerd Font' for best experience"
+    fi
+}
+
+# Install Noto Sans Symbols 2 font (for Tokyo Night tmux)
+install_noto_symbols() {
+    log_info "Checking for Noto Sans Symbols 2 font..."
+
+    if [[ "$OS" == "macos" ]]; then
+        brew install --cask font-noto-sans-symbols-2
+        log_success "Noto Sans Symbols 2 installed via Homebrew"
+    else
+        local FONT_DIR="$HOME/.local/share/fonts"
+        local FONT_FILE="$FONT_DIR/NotoSansSymbols2-Regular.ttf"
+
+        if [ -f "$FONT_FILE" ]; then
+            log_success "Noto Sans Symbols 2 already installed"
+            return
+        fi
+
+        log_info "Installing Noto Sans Symbols 2 font..."
+        mkdir -p "$FONT_DIR"
+        cd "$FONT_DIR"
+
+        if ! wget -q https://github.com/google/fonts/raw/main/ofl/notosanssymbols2/NotoSansSymbols2-Regular.ttf; then
+            log_error "Failed to download Noto Sans Symbols 2"
+            return 1
+        fi
+
+        if command_exists fc-cache; then
+            fc-cache -fv
+            log_success "Noto Sans Symbols 2 installed and cache updated"
+        else
+            log_success "Noto Sans Symbols 2 installed (fc-cache not available, restart terminal to apply)"
+        fi
     fi
 }
 
@@ -359,7 +437,9 @@ EOF
     install_claude_code
     install_oh_my_zsh
     install_powerlevel10k
+    install_tpm
     install_nerd_font
+    install_noto_symbols
 
     # Only clone if not running from within .dotfiles directory
     if [ "$(pwd)" != "$HOME/.dotfiles" ]; then
@@ -383,10 +463,11 @@ EOF
     log_info "Next steps:"
     echo "  1. Restart your terminal or run: source ~/.zshrc"
     echo "  2. Configure Powerlevel10k: p10k configure"
-    echo "  3. Open neovim - plugins will auto-install: nvim"
-    echo "  4. Set up Claude Code: claude"
-    echo "  5. Make sure your terminal uses 'DejaVuSansM Nerd Font'"
-    echo "  6. (Optional) Create ~/.zshrc.local for machine-specific aliases/config"
+    echo "  3. Start tmux to see the Tokyo Night theme: tmux"
+    echo "  4. Open neovim - plugins will auto-install: nvim"
+    echo "  5. Set up Claude Code: claude"
+    echo "  6. Make sure your terminal uses 'DejaVuSansM Nerd Font'"
+    echo "  7. (Optional) Create ~/.zshrc.local for machine-specific aliases/config"
     echo
     log_warning "If you want to use zsh immediately, run: zsh"
 }
