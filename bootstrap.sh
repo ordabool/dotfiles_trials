@@ -62,7 +62,7 @@ command_exists() {
 install_packages() {
     log_info "Installing system packages..."
 
-    local packages="git curl wget unzip tmux zsh fzf ripgrep jq bc xclip build-essential fontconfig"
+    local packages="git curl wget unzip tmux zsh fzf ripgrep jq bc xclip build-essential fontconfig sysstat"
 
     case $OS in
         ubuntu|debian|pop)
