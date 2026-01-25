@@ -11,7 +11,21 @@ return {
   ---@module "neo-tree"
   ---@type neotree.Config?
   opts = {
-    -- fill any relevant options here
-    vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', { desc = 'Toggle Neo-tree' })
+    filesystem = {
+      filtered_items = {
+        visible = true, -- Show hidden files by default
+        hide_dotfiles = false,
+        hide_gitignored = false,
+        hide_by_name = {
+          -- Still hide these specific directories
+          ".git",
+          "node_modules",
+        },
+      },
+    },
   },
+  config = function(_, opts)
+    require("neo-tree").setup(opts)
+    vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', { desc = 'Toggle Neo-tree' })
+  end,
 }
