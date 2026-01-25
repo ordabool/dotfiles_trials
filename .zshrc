@@ -115,6 +115,14 @@ alias t='tmux'
 alias ta='tmux attach'
 alias tl='tmux list-sessions'
 alias ts='tmux new-session -s'
+alias trl='tmux source-file ~/.tmux.conf'
+
+# Editor aliases
+alias vim='nvim'
+alias vi='nvim'
+
+# Shell aliases
+alias reload='source ~/.zshrc'
 
 # Load Powerlevel10k theme (try multiple possible locations)
 if [[ -f ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme ]]; then
