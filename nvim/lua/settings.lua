@@ -77,6 +77,9 @@ vim.keymap.set('n', '<leader>/', function()
   vim.cmd('nohlsearch')
 end, { desc = 'Clear search highlighting' })
 
+-- Quick buffer switching
+vim.keymap.set('n', ',,', '<C-^>', { desc = 'Toggle to last buffer' })
+
 -- Add YACC filetype syntax highlighting
 vim.filetype.add({
   pattern = { [".*%.y"] = "yacc" },

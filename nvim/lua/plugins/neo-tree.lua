@@ -27,5 +27,18 @@ return {
   config = function(_, opts)
     require("neo-tree").setup(opts)
     vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', { desc = 'Toggle Neo-tree' })
+
+    -- Auto-close Neo-tree when it's the last window
+    vim.api.nvim_create_autocmd("BufEnter", {
+      pattern = "*",
+      callback = function()
+        local bufname = vim.api.nvim_buf_get_name(0)
+        if bufname:match("neo%-tree") then
+          if #vim.api.nvim_list_wins() == 1 then
+            vim.cmd("quit")
+          end
+        end
+      end,
+    })
   end,
 }
