@@ -6,8 +6,8 @@ vim.g.have_nerd_font = true
 vim.opt.breakindent = true
 vim.opt.undofile = true
 
--- Keep signcolumn on by default
-vim.opt.signcolumn = 'no'
+-- Keep signcolumn on by default (for git signs and diagnostics)
+vim.opt.signcolumn = 'yes'
 
 -- Show which line your cursor is on
 vim.opt.cursorline = false

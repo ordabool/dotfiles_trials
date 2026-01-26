@@ -21,6 +21,11 @@ require("tokyonight").setup({
   -- adjust specific highlights
   on_highlights = function(hl, c)
     hl.CursorLineNr = { fg = c.orange, bold = true }
+    -- GitSigns colors
+    hl.GitSignsAdd = { fg = c.green }
+    hl.GitSignsChange = { fg = c.yellow }
+    hl.GitSignsDelete = { fg = c.red }
+    hl.GitSignsUntracked = { fg = c.comment }
   end,
 })
 
