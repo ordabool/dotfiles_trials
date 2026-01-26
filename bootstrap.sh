@@ -200,14 +200,15 @@ install_claude_code() {
 
     log_info "Installing Claude Code..."
 
-    if [[ "$OS" == "macos" ]]; then
-        brew install claude
+    # Use official installer script
+    if curl -fsSL https://claude.ai/install.sh | bash; then
+        # Update PATH for current session so subsequent commands can find claude
+        export PATH="$HOME/.local/bin:$PATH"
+        log_success "Claude Code installed"
     else
-        # Install via npm globally
-$SUDO npm install -g @anthropic-ai/claude-code
+        log_error "Failed to install Claude Code"
+        return 1
     fi
-
-    log_success "Claude Code installed"
 }
 
 # Install Oh My Zsh
