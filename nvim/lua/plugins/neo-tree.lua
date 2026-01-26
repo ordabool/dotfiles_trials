@@ -27,6 +27,7 @@ return {
   config = function(_, opts)
     require("neo-tree").setup(opts)
     vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', { desc = 'Toggle Neo-tree' })
+    vim.keymap.set('n', '<leader>E', ':Neotree reveal<CR>', { desc = 'Reveal current file in Neo-tree' })
 
     -- Auto-close Neo-tree when it's the last window
     vim.api.nvim_create_autocmd("BufEnter", {
