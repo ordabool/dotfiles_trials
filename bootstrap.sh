@@ -62,10 +62,9 @@ command_exists() {
 install_packages() {
     log_info "Installing system packages..."
 
-    local packages="git curl wget unzip tmux zsh fzf ripgrep jq bc xclip build-essential fontconfig sysstat"
-
     case $OS in
         ubuntu|debian|pop)
+            local packages="git curl wget unzip tmux zsh fzf ripgrep jq bc xclip build-essential fontconfig sysstat"
             $SUDO apt-get update
             $SUDO apt-get install -y $packages
             # Install GitHub CLI
@@ -79,9 +78,11 @@ install_packages() {
             fi
             ;;
         fedora|rhel|centos)
+            local packages="git curl wget unzip tmux zsh fzf ripgrep jq bc xclip fontconfig sysstat"
             $SUDO dnf install -y $packages gh
             ;;
         arch|manjaro)
+            local packages="git curl wget unzip tmux zsh fzf ripgrep jq bc xclip base-devel fontconfig sysstat"
             $SUDO pacman -Sy --noconfirm $packages github-cli
             ;;
         macos)
@@ -89,6 +90,7 @@ install_packages() {
                 log_info "Installing Homebrew..."
                 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             fi
+            local packages="git curl wget unzip tmux zsh fzf ripgrep jq bc fontconfig"
             brew install $packages gh
             ;;
         *)
