@@ -98,6 +98,12 @@ vim.api.nvim_set_keymap('n', '<C-l>', ':vertical resize +2<CR>', { noremap = tru
 vim.keymap.set('n', '<C-w>%', ':vsplit<CR>', { desc = 'Vertical split (tmux-style)' })
 vim.keymap.set('n', '<C-w>"', ':split<CR>', { desc = 'Horizontal split (tmux-style)' })
 
+-- Ctrl+w then Alt+hjkl to move/swap windows
+vim.keymap.set('n', '<C-w><M-h>', '<C-w>H', { desc = 'Move window to far left' })
+vim.keymap.set('n', '<C-w><M-j>', '<C-w>J', { desc = 'Move window to bottom' })
+vim.keymap.set('n', '<C-w><M-k>', '<C-w>K', { desc = 'Move window to top' })
+vim.keymap.set('n', '<C-w><M-l>', '<C-w>L', { desc = 'Move window to far right' })
+
 -- Treat Jenkinsfile as groovy
 vim.cmd [[
   autocmd BufRead,BufNewFile *Jenkinsfile* set filetype=groovy
