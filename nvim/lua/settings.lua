@@ -94,6 +94,10 @@ vim.api.nvim_set_keymap('n', '<C-j>', ':resize +2<CR>', { noremap = true, silent
 vim.api.nvim_set_keymap('n', '<C-k>', ':resize -2<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-l>', ':vertical resize +2<CR>', { noremap = true, silent = true })
 
+-- Tmux-style splits (Ctrl+w followed by % or ")
+vim.keymap.set('n', '<C-w>%', ':vsplit<CR>', { desc = 'Vertical split (tmux-style)' })
+vim.keymap.set('n', '<C-w>"', ':split<CR>', { desc = 'Horizontal split (tmux-style)' })
+
 -- Treat Jenkinsfile as groovy
 vim.cmd [[
   autocmd BufRead,BufNewFile *Jenkinsfile* set filetype=groovy
