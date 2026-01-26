@@ -2,6 +2,10 @@
 
 Development environment configuration for tmux + neovim + zsh + Claude Code.
 
+## Documentation
+
+- **[Cheatsheet](CHEATSHEET.md)** - Complete reference for keybindings and aliases
+
 ## Quick Setup (New Machine)
 
 Run this one-liner to bootstrap your development environment:
@@ -19,12 +23,14 @@ cd ~/.dotfiles
 ```
 
 The script will install:
-- Git, tmux, zsh, fzf, ripgrep, jq, xclip
+- System packages: git, tmux, zsh, fzf, ripgrep, jq, bc, xclip, sysstat
+- GitHub CLI (gh) for git integration
 - Neovim (latest stable from binary)
 - Node.js v20+
 - Claude Code CLI
 - Oh My Zsh + Powerlevel10k theme
-- DejaVuSansM Nerd Font
+- Tmux Plugin Manager (TPM)
+- DejaVuSansM Nerd Font + Noto Sans Symbols 2
 - All dotfile configurations (with backups of existing files)
 
 ## Machine-Specific Configuration
@@ -34,14 +40,21 @@ Create `~/.zshrc.local` for machine-specific aliases and environment variables t
 ## What's Included
 
 - **Neovim**: Lua-based config with Lazy.nvim plugin manager
-  - Tokyo Night theme
-  - Telescope (fuzzy finder)
-  - Neo-tree (file explorer)
+  - Tokyo Night theme (with transparent background)
+  - Telescope (fuzzy finder with hidden file support)
+  - Neo-tree (file explorer with dotfile visibility)
+  - GitSigns (git integration with visual indicators)
+  - Undotree (branched undo history visualization)
   - Treesitter (syntax highlighting)
   - LSP-ready configuration
   - Auto-reload for external changes
-- **Tmux**: Vim-like keybindings, Ctrl+a prefix, mouse support
-- **Zsh**: Oh My Zsh + Powerlevel10k prompt
+- **Tmux**: Tokyo Night theme, vim-like keybindings, Ctrl+a prefix
+  - CPU & RAM monitoring
+  - Battery widget
+  - Git status integration
+  - Vim-style pane navigation and resizing
+- **Zsh**: Oh My Zsh + Powerlevel10k prompt (rainbow style, 2-line)
+- **Fonts**: DejaVuSansM Nerd Font + Noto Sans Symbols 2
 - **Workflow**: Optimized for tmux + vim + Claude Code side-by-side
 
 ## Manual Steps (Already Automated Above)
