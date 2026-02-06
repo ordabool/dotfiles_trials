@@ -33,8 +33,7 @@ return {
     vim.api.nvim_create_autocmd("BufEnter", {
       pattern = "*",
       callback = function()
-        local bufname = vim.api.nvim_buf_get_name(0)
-        if bufname:match("neo%-tree") then
+        if vim.bo.filetype == "neo-tree" then
           if #vim.api.nvim_list_wins() == 1 then
             vim.cmd("quit")
           end
