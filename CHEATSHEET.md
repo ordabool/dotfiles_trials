@@ -10,6 +10,7 @@ Quick reference for all keybindings, aliases, and shortcuts.
 - [Neovim - Window Management](#neovim---window-management)
 - [Neovim - Git Integration](#neovim---git-integration)
 - [Neovim - Undo History](#neovim---undo-history)
+- [Neovim - LSP](#neovim---lsp)
 - [Neovim - Utilities](#neovim---utilities)
 
 ---
@@ -214,6 +215,47 @@ Quick reference for all keybindings, aliases, and shortcuts.
 - Timestamps for each change
 - Diff preview of changes
 - Never lose work - access any previous state!
+
+---
+
+## Neovim - LSP
+
+Keybindings are active only in buffers where a language server has attached (e.g. `.c`, `.cpp` files with clangd).
+
+### Navigation
+| Keybinding | Action |
+|------------|--------|
+| `gd` | Go to definition |
+| `gD` | Go to declaration |
+| `gi` | Go to implementation |
+| `gr` | Find all references |
+| `K` | Hover documentation (press again to enter float) |
+| `[d` | Jump to previous diagnostic |
+| `]d` | Jump to next diagnostic |
+
+### Editing
+| Keybinding | Action |
+|------------|--------|
+| `,rn` | Rename symbol under cursor |
+| `,ca` | Code action (fixes, refactors suggested by LSP) |
+| `,F` | Format buffer |
+| `,d` | Show diagnostics for current line |
+
+### Autocomplete (insert mode)
+| Keybinding | Action |
+|------------|--------|
+| `Ctrl+n` / `Ctrl+p` | Navigate completion menu |
+| `Tab` / `Shift+Tab` | Navigate menu (or jump snippet fields) |
+| `Enter` | Confirm selected completion |
+| `Ctrl+Space` | Manually trigger completion |
+| `Ctrl+d` / `Ctrl+u` | Scroll docs popup |
+| `Ctrl+e` | Close completion menu |
+
+**Notes:**
+- Completions are sourced from: LSP → snippets → buffer words → file paths
+- For best results in larger projects, add `compile_commands.json` to the project root
+  - CMake: `cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON`
+  - Any build system: `bear -- make`
 
 ---
 
