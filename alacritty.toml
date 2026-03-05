@@ -1,0 +1,11 @@
+[terminal]
+
+[terminal.shell]
+program = "C:\\Windows\\System32\\wsl.exe"
+args = ["~", "-d", "Ubuntu"]
+
+[font]
+normal.family = "DejaVuSansM Nerd Font"
+
+[window]
+opacity = 0.80
