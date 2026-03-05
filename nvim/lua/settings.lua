@@ -85,6 +85,9 @@ vim.filetype.add({
   pattern = { [".*%.y"] = "yacc" },
 })
 
+-- Subtle column guide at 120 characters
+vim.opt.colorcolumn = '120'
+
 -- Set terminal colors
 vim.opt.termguicolors = true
 

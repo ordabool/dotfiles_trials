@@ -46,7 +46,7 @@ return {
             --   cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
             --   bear -- make  (wraps any build system)
             require("mason-lspconfig").setup({
-                ensure_installed = { "clangd" },
+                ensure_installed = { "clangd", "pyright", "jsonls", "lua_ls", "yamlls" },
                 automatic_enable = true,
             })
         end,

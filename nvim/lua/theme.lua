@@ -26,6 +26,7 @@ require("tokyonight").setup({
     hl.GitSignsChange = { fg = c.yellow }
     hl.GitSignsDelete = { fg = c.red }
     hl.GitSignsUntracked = { fg = c.comment }
+    hl.ColorColumn = { bg = c.bg_highlight }
   end,
 })
 
